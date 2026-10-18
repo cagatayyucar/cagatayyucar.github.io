@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Çağatay Uçar — Çevre ve Proje Mühendisi</title>
+<meta name="description" content="Çağatay Uçar: arıtma tesisleri için 3D tasarım, P&ID, izometrik, imalat çizimi ve FEA analizi. İnteraktif 3D modeller.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Cpath d='M8 24 16 7l8 17h-4l-4-9-4 9z' fill='%23ff7a1a'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap">
+<link rel="stylesheet" href="css/tailwind.css">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">İçeriğe geç</a>
+
+<!-- NAV -->
+<header id="nav" class="nav" data-theme="dark">
+  <div class="nav-bar wrap flex items-center justify-between">
+    <a href="#top" class="brand" data-i18n-attr="aria-label:nav.home" aria-label="Ana sayfa">
+      <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M7 25 16 6l9 19h-4.4L16 15.2 11.4 25z" fill="currentColor"/><circle cx="16" cy="23" r="2.2" fill="var(--fx)"/></svg>
+      <span>Çağatay Uçar</span>
+    </a>
+    <nav class="nav-links hidden md:flex" aria-label="Ana menü">
+      <a href="#about" data-i18n="nav.about">Hakkımda</a>
+      <a href="#software" data-i18n="nav.software">Yazılım</a>
+      <a href="#models" data-i18n="nav.models">3D modeller</a>
+      <a href="#fea" data-i18n="nav.analysis">Analiz</a>
+      <a href="#drawings" data-i18n="nav.drawings">Çizimler</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <div class="lang" role="group" data-i18n-attr="aria-label:lang.label" aria-label="Dil" data-active="tr">
+        <span class="lang-thumb" aria-hidden="true"></span>
+        <button type="button" data-lang-btn="tr" aria-pressed="true">TR</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+      <a href="#contact" class="pill-cta hidden md:inline-flex" data-i18n="nav.contact">İletişim</a>
+      <button type="button" id="menu-btn" class="menu-btn md:hidden" aria-expanded="false" aria-controls="menu" data-i18n-attr="aria-label:nav.menu" aria-label="Menü">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div id="menu" class="menu md:hidden" hidden>
+    <a href="#about" data-i18n="nav.about">Hakkımda</a>
+    <a href="#software" data-i18n="nav.software">Yazılım</a>
+    <a href="#models" data-i18n="nav.models">3D modeller</a>
+    <a href="#fea" data-i18n="nav.analysis">Analiz</a>
+    <a href="#drawings" data-i18n="nav.drawings">Çizimler</a>
+    <a href="#contact" data-i18n="nav.contact">İletişim</a>
+  </div>
+  <div class="nav-progress" aria-hidden="true"><i id="progress"></i></div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="top" class="hero" data-theme="dark">
+  <div class="hero-track" id="hero-track">
+    <div class="hero-stage">
+      <div class="eng-grid" id="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow" id="hero-glow" aria-hidden="true"></div>
+
+      <div class="viewer hero-viewer" id="view-hero" data-viewer="hero" data-model="skid" role="img" data-i18n-attr="aria-label:hero.alt" aria-label="Çift UF skid’inin interaktif 3D modeli">
+        <img class="viewer-poster" src="img/teknik-cizim2.png" alt="" loading="lazy" decoding="async">
+      </div>
+
+      <div class="hero-copy wrap">
+        <h1 class="t-hero rv" data-i18n-h="hero.h1">Pikselden<br>Gerçek Tesise</h1>
+        <p class="t-lead hero-sub" data-fade data-i18n="hero.sub">Çağatay Uçar. Çevre&amp;Proje Mühendisi. 3D modelleme, borulama ve süreç tasarımı.</p>
+        <div class="hero-actions" data-fade>
+          <a href="#models" class="btn btn-fx" data-i18n="hero.cta1">3D modelleri incele</a>
+          <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta2">İletişime geç</a>
+        </div>
+      </div>
+
+      <div class="hero-caps wrap" id="hero-caps" aria-live="polite">
+        <div class="cap is-on" data-cap="0">
+          <p class="cap-t" data-i18n="hero.cap1.t">Tasarım</p>
+          <p class="cap-d" data-i18n="hero.cap1.d">AutoCAD Plant 3D’de 3D yerleşim, borulama ve malzeme listesi.</p>
+        </div>
+        <div class="cap" data-cap="1">
+          <p class="cap-t" data-i18n="hero.cap2.t">İmalat</p>
+          <p class="cap-d" data-i18n="hero.cap2.d">Flanş ve bağlantı elemanları, lazer kesime hazır çizimlerle.</p>
+        </div>
+        <div class="cap" data-cap="2">
+          <p class="cap-t" data-i18n="hero.cap3.t">Devreye alma</p>
+          <p class="cap-d" data-i18n="hero.cap3.d">Tesis çalışana kadar sahada, sonrasında işletmede.</p>
+        </div>
+      </div>
+
+      <div class="hero-rail" aria-hidden="true"><i id="hero-rail-fill"></i></div>
+      <i class="hero-load" id="hero-load" aria-hidden="true"></i>
+      <p class="hero-model" data-i18n="hero.model">Model: çift UF skid’i</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT: words light up with scroll -->
+<section id="statement" class="statement" data-theme="light">
+  <div class="statement-track" id="statement-track">
+    <div class="statement-stage wrap">
+      <p class="t-statement" id="statement-text" data-i18n="statement">Sızıntı suyu ve atıksu arıtma tesislerini 3D çizer, imalata hazırlar ve sahada devreye alırım.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section section-white" data-theme="light">
+  <div class="wrap grid gap-14 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <h2 class="t-h2 t-h2-s rv" data-i18n-h="about.h">Çevre<br>Mühendisinden</h2>
+      <p class="t-body mt-10 max-w-[34rem]" data-fade data-i18n="about.p1">Çöp sızıntı suyu ve atıksu arıtma tesisleri projelerinde uzmanlaşan çalışma alanları:</p>
+      <ul class="about-list mt-6 max-w-[34rem]" data-stagger>
+        <li class="t-body" data-i18n="about.b1">AutoCAD Plant 3D altyapısıyla 3D yerleşim, borulama ve izometrik imalat projelerinin tasarlanması,</li>
+        <li class="t-body" data-i18n="about.b2">Hassas malzeme listeleri (BOM) ve teknik metrajların oluşturulması,</li>
+        <li class="t-body" data-i18n="about.b3">İmalatı tamamlanan tesislerin saha devreye alma ve işletme operasyonlarının gerçekleştirilmesi.</li>
+      </ul>
+    </div>
+    <div class="lg:col-span-7">
+      <h3 class="t-small" data-fade data-i18n="about.focus">Uzmanlık alanları</h3>
+      <ul class="focus-list mt-4" data-stagger>
+        <li><a class="focus-row" href="#models"><span class="focus-t" data-i18n="f1.t">Endüstriyel tesis tasarımı</span><span class="focus-d" data-i18n="f1.d">Yerleşim, borulama, ekipman</span><i class="focus-go" aria-hidden="true"></i></a></li>
+        <li><a class="focus-row" href="#pid"><span class="focus-t" data-i18n="f2.t">Atıksu ve sızıntı suyu arıtma</span><span class="focus-d" data-i18n="f2.d">UF, NF ve CIP hatları</span><i class="focus-go" aria-hidden="true"></i></a></li>
+        <li><a class="focus-row" href="#models"><span class="focus-t" data-i18n="f4.t">3D imalat modelleri</span><span class="focus-d" data-i18n="f4.d">Tank, skid ve şasi</span><i class="focus-go" aria-hidden="true"></i></a></li>
+        <li><a class="focus-row" href="#fea"><span class="focus-t" data-i18n="f5.t">Hidrostatik ve FEA analizi</span><span class="focus-d" data-i18n="f5.d">Fusion 360 simülasyonu</span><i class="focus-go" aria-hidden="true"></i></a></li>
+        <li><a class="focus-row" href="#pid"><span class="focus-t" data-i18n="f6.t">P&amp;ID diyagramları</span><span class="focus-d" data-i18n="f6.d">Proses akış şemaları</span><i class="focus-go" aria-hidden="true"></i></a></li>
+        <li><a class="focus-row" href="#iso"><span class="focus-t" data-i18n="f7.t">Boru izometrikleri</span><span class="focus-d" data-i18n="f7.d">BOM ve kesim listesi</span><i class="focus-go" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SOFTWARE -->
+<section id="software" class="section section-black" data-theme="dark">
+  <div class="wrap">
+    <h2 class="t-h2 rv max-w-[18ch]" data-i18n-h="sw.h">Her gün çizdiğim<br>üç araç.</h2>
+    <p class="t-lead mt-6" data-fade data-i18n="sw.sub">Çizimden imalata, borulamadan analize.</p>
+
+    <div class="tools mt-16 grid gap-5 md:grid-cols-3" data-stagger>
+      <article class="tile" data-spot>
+        <img class="logo" src="img/logos/autocad.png" alt="AutoCAD logosu" width="96" height="96" loading="lazy" decoding="async">
+        <h3 class="tile-t">AutoCAD</h3>
+        <p class="tile-d" data-i18n="sw.acad.d">2D imalat çizimleri, flanş ve bağlantı elemanı profilleri; lazer kesim için hazırlama.</p>
+      </article>
+      <article class="tile" data-spot>
+        <img class="logo" src="img/logos/plant3d.png" alt="AutoCAD Plant 3D logosu" width="96" height="96" loading="lazy" decoding="async">
+        <h3 class="tile-t">AutoCAD Plant 3D</h3>
+        <p class="tile-d" data-i18n="sw.p3d.d">3D borulama, P&amp;ID, izometrik ve malzeme listesi (BOM) çıktıları.</p>
+      </article>
+      <article class="tile" data-spot>
+        <img class="logo" src="img/logos/fusion360.png" alt="Autodesk Fusion 360 logosu" width="96" height="96" loading="lazy" decoding="async">
+        <h3 class="tile-t">Autodesk Fusion 360</h3>
+        <p class="tile-d" data-i18n="sw.f360.d">İmalat modelleri, hidrostatik basınç altında FEA simülasyonu ve teknik resim.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3D MODELS -->
+<section id="models" class="section section-night" data-theme="dark">
+  <div class="wrap">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <h2 class="t-h2 rv lg:col-span-8" data-i18n-h="m.h">Üç imalat modeli.<br>Döndürün, inceleyin.</h2>
+      <p class="t-lead lg:col-span-4" data-fade data-i18n="m.sub">Üretime giden modellerin kendisi, tarayıcıda gerçek zamanlı.</p>
+    </div>
+
+    <div class="mt-16 grid gap-5 lg:grid-cols-2">
+      <!-- Dual UF skid -->
+      <article class="vcard vcard-wide lg:col-span-2" id="model-skid" data-reveal-card>
+        <div class="viewer" data-viewer="card" data-model="skid" role="img" data-i18n-attr="aria-label:m.skid.t" aria-label="Çift UF skid’i">
+          <img class="viewer-poster" src="img/teknik-cizim2.png" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="vui-top">
+          <p class="vhint glass"><span class="vhint-mouse" data-i18n="m.hint.mouse">Sürükle: döndür.</span><span class="vhint-touch" data-i18n="m.hint.touch">Yana kaydır: döndür.</span></p>
+          <div class="vctl">
+            <button type="button" class="glass icon-btn" data-act="auto" aria-pressed="true" data-i18n-attr="aria-label:m.auto;title:m.auto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="glass icon-btn" data-act="wire" aria-pressed="false" data-i18n-attr="aria-label:m.wire;title:m.wire"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12 4 7.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="glass icon-btn" data-act="reset" data-i18n-attr="aria-label:m.reset;title:m.reset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+        <div class="vinfo glass-panel">
+          <h3 class="vt" data-i18n="m.skid.t">Çift UF skid’i</h3>
+          <p class="vd" data-i18n="m.skid.d">İkili ultrafiltrasyon skid’i.</p>
+          <ul class="chips"><li data-i18n="m.skid.c2">İkili UF hattı</li><li data-i18n="m.skid.c3">Skid üzerinde</li></ul>
+        </div>
+        <p class="viewer-state" role="status"><span data-i18n="m.loading">Model yükleniyor</span></p>
+      </article>
+
+      <!-- HDPE CIP tank -->
+      <article class="vcard" id="model-cip" data-reveal-card>
+        <div class="viewer" data-viewer="card" data-model="cip" role="img" data-i18n-attr="aria-label:m.cip.t" aria-label="HDPE CIP tankı">
+          <img class="viewer-poster" src="img/teknik-cizim1.png" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="vui-top">
+          <span></span>
+          <div class="vctl">
+            <button type="button" class="glass icon-btn" data-act="auto" aria-pressed="true" data-i18n-attr="aria-label:m.auto;title:m.auto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="glass icon-btn" data-act="wire" aria-pressed="false" data-i18n-attr="aria-label:m.wire;title:m.wire"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12 4 7.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="glass icon-btn" data-act="reset" data-i18n-attr="aria-label:m.reset;title:m.reset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+        <div class="vinfo glass-panel">
+          <h3 class="vt" data-i18n="m.cip.t">HDPE CIP tankı</h3>
+          <p class="vd" data-i18n="m.cip.d">Çift cidarlı tank.</p>
+        </div>
+        <p class="viewer-state" role="status"><span data-i18n="m.loading">Model yükleniyor</span></p>
+      </article>
+
+      <!-- Skid-mounted CIP tank -->
+      <article class="vcard" id="model-sk" data-reveal-card>
+        <div class="viewer" data-viewer="card" data-model="sk" role="img" data-i18n-attr="aria-label:m.sk.t" aria-label="Şasili CIP tankı">
+          <img class="viewer-poster" src="img/teknik-cizim1.png" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="vui-top">
+          <span></span>
+          <div class="vctl">
+            <button type="button" class="glass icon-btn" data-act="auto" aria-pressed="true" data-i18n-attr="aria-label:m.auto;title:m.auto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="glass icon-btn" data-act="wire" aria-pressed="false" data-i18n-attr="aria-label:m.wire;title:m.wire"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12 4 7.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+            <button type="button" class="glass icon-btn" data-act="reset" data-i18n-attr="aria-label:m.reset;title:m.reset"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+        </div>
+        <div class="vinfo glass-panel">
+          <h3 class="vt" data-i18n="m.sk.t">Şasili CIP tankı</h3>
+          <p class="vd" data-i18n="m.sk.d">Tank, taşıyıcı şasi ve nozul bağlantıları tek modelde.</p>
+          <ul class="chips"><li data-i18n="m.sk.c1">Şasi üzerinde</li><li data-i18n="m.sk.c2">3D imalat modeli</li></ul>
+        </div>
+        <p class="viewer-state" role="status"><span data-i18n="m.loading">Model yükleniyor</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FEA: Fusion 360 displacement animation, scrubbed by scroll -->
+<section id="fea" class="section section-paper fea" data-theme="light">
+  <div class="fea-track" id="fea-track">
+    <div class="fea-stage wrap">
+      <div class="fea-copy">
+        <h2 class="t-h2 t-h2-s rv" data-i18n-h="fea.h">Kafanızda soru<br>işareti kalmasın.</h2>
+        <p class="t-body mt-10 max-w-[32rem]" data-fade data-i18n="fea.p">Fusion ortamında gerçekleştirilen hidrolik ve statik simülasyonlar sayesinde, olası deformasyon noktaları üretim öncesi kusursuz şekilde analiz ediliyor.</p>
+        <div class="fea-legend mt-10" data-fade>
+          <p class="t-small" data-i18n="fea.legend">Yer değiştirme</p>
+          <div class="fea-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-i18n-attr="aria-label:fea.legend"><i id="fea-marker"></i></div>
+          <div class="fea-bar-lbl"><span data-i18n="fea.low">Düşük</span><span data-i18n="fea.high">Yüksek</span></div>
+          <p class="fea-hint t-small" data-i18n="fea.hint">Kaydırdıkça simülasyon ilerler.</p>
+        </div>
+      </div>
+      <figure class="fea-view">
+        <canvas id="fea-canvas" width="840" height="760" role="img" data-i18n-attr="aria-label:fea.alt" aria-label="Hidrostatik basınç altında tank cidarının Fusion 360 yer değiştirme animasyonu"></canvas>
+        <img id="fea-still" class="fea-still" src="img/fea/f64.webp" width="840" height="760" alt="" loading="lazy" decoding="async">
+        <figcaption class="t-small mt-4" data-i18n="fea.cap">Fusion 360 simülasyonu, yer değiştirme animasyonu</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- P&ID -->
+<section id="pid" class="section section-black" data-theme="dark">
+  <div class="wrap">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <h2 class="t-h2 rv lg:col-span-7" data-i18n-h="pid.h">Tüm prosesi<br>tek sayfada gör.</h2>
+      <p class="t-lead lg:col-span-5" data-fade data-i18n="pid.p">UF, CIP ve NF hatlarını gösteren P&amp;ID.</p>
+    </div>
+    <figure class="sheet sheet-dark mt-16" data-zoomin>
+      <button type="button" class="sheet-btn" data-lightbox="img/pid.png" data-cap="pid.cap" data-alt="pid.alt">
+        <img src="img/pid.png" width="1307" height="676" alt="UF, CIP ve NF hatlarını gösteren P&ID diyagramı" data-i18n-attr="alt:pid.alt" loading="lazy" decoding="async">
+        <span class="sheet-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L21 21M10.5 7.5v6M7.5 10.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      </button>
+    </figure>
+  </div>
+</section>
+
+<!-- TECHNICAL DRAWINGS -->
+<section id="drawings" class="section section-paper" data-theme="light">
+  <div class="wrap">
+    <h2 class="t-h2 rv" data-i18n-h="d.h">İmalata hazır<br>teknik resimler.</h2>
+
+    <div class="mt-20 grid gap-12 lg:grid-cols-12 lg:items-center">
+      <figure class="sheet lg:col-span-7" data-zoomin>
+        <button type="button" class="sheet-btn" data-lightbox="img/teknik-cizim1.png" data-cap="d.tank.t" data-alt="d.tank.alt">
+          <img src="img/teknik-cizim1.png" width="1091" height="762" alt="CIP tankının imalat teknik resmi" data-i18n-attr="alt:d.tank.alt" loading="lazy" decoding="async">
+          <span class="sheet-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L21 21M10.5 7.5v6M7.5 10.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+      </figure>
+      <div class="lg:col-span-5">
+        <h3 class="t-h3" data-fade data-i18n="d.tank.t">CIP tankı imalat resmi</h3>
+        <p class="t-body mt-4" data-fade data-i18n="d.tank.p">Üç görünüş, kesit detayları ve nozul ölçüleri.</p>
+        <a href="#model-cip" class="btn btn-dark mt-8" data-i18n="d.open">3D modeli aç</a>
+      </div>
+    </div>
+
+    <div class="mt-28 grid gap-12 lg:grid-cols-12 lg:items-center">
+      <div class="lg:col-span-5 lg:order-1">
+        <h3 class="t-h3" data-fade data-i18n="d.skid.t">UF skid montaj resmi</h3>
+        <p class="t-body mt-4" data-fade data-i18n="d.skid.p">Üst, yan ve ön görünüşler ile izometrik.</p>
+        <a href="#model-skid" class="btn btn-dark mt-8" data-i18n="d.open">3D modeli aç</a>
+      </div>
+      <figure class="sheet lg:col-span-7 lg:order-2" data-zoomin>
+        <button type="button" class="sheet-btn" data-lightbox="img/teknik-cizim2.png" data-cap="d.skid.t" data-alt="d.skid.alt">
+          <img src="img/teknik-cizim2.png" width="1095" height="767" alt="UF skid’inin görünüşleri ve izometriği" data-i18n-attr="alt:d.skid.alt" loading="lazy" decoding="async">
+          <span class="sheet-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L21 21M10.5 7.5v6M7.5 10.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ISOMETRICS: sheets stack as you scroll -->
+<section id="iso" class="section section-night" data-theme="dark">
+  <div class="wrap">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <h2 class="t-h2 rv lg:col-span-7" data-i18n-h="iso.h">Boru izometrikleri,<br>malzeme listesiyle.</h2>
+      <p class="t-lead lg:col-span-5" data-fade data-i18n="iso.p">AutoCAD Plant 3D’den üretilen izometrikler.</p>
+    </div>
+
+    <div class="iso-stack mt-16">
+      <figure class="iso-card" style="--k:0">
+        <button type="button" class="sheet-btn" data-lightbox="img/izometri-1.png" data-cap="iso.1.t" data-alt="iso.1.alt">
+          <img src="img/izometri-1.png" width="1152" height="797" alt="63 mm PVC hattın boru izometriği" data-i18n-attr="alt:iso.1.alt" loading="lazy" decoding="async">
+          <span class="sheet-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L21 21M10.5 7.5v6M7.5 10.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <figcaption><strong data-i18n="iso.1.t">63 mm PVC hat</strong><span data-i18n="iso.1.d">Te, flanş adaptörü, kelebek vana ve kesim listesi.</span></figcaption>
+      </figure>
+      <figure class="iso-card" style="--k:1">
+        <button type="button" class="sheet-btn" data-lightbox="img/izometri-2.png" data-cap="iso.2.t" data-alt="iso.2.alt">
+          <img src="img/izometri-2.png" width="1126" height="782" alt="63 ve 20 mm indirgemeli hattın boru izometriği" data-i18n-attr="alt:iso.2.alt" loading="lazy" decoding="async">
+          <span class="sheet-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.5 18a7.5 7.5 0 1 1 5.3-2.2L21 21M10.5 7.5v6M7.5 10.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <figcaption><strong data-i18n="iso.2.t">63 / 20 mm indirgemeli hat</strong><span data-i18n="iso.2.d">İndirgeme, dirsek ve flanş adaptörü.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact" data-theme="dark">
+  <div class="contact-glow" aria-hidden="true"></div>
+  <div class="wrap relative">
+    <h2 class="t-h2 rv" data-i18n-h="c.h">Bir tesis mi planlıyorsunuz?<br>Konuşalım.</h2>
+    <p class="t-lead mt-6 max-w-[34rem]" data-fade data-i18n="c.p">Proje, imalat çizimi ya da devreye alma için yazın.</p>
+    <div class="mt-10 flex flex-wrap gap-3" data-fade>
+      <a id="mail-link" class="btn btn-fx" href="mailto:cagatayucar.67@gmail.com" data-i18n="c.mail">E-posta gönder</a>
+      <a id="tel-link" class="btn btn-ghost" href="tel:+905557453960" data-i18n="c.call">Ara</a>
+    </div>
+    <ul class="contact-list mt-10" data-fade>
+      <li><span data-i18n="c.l.mail">E-posta</span><a href="mailto:cagatayucar.67@gmail.com">cagatayucar.67@gmail.com</a></li>
+      <li><span data-i18n="c.l.tel">Telefon</span><a href="tel:+905557453960">+90 555 745 39 60</a></li>
+    </ul>
+  </div>
+  <div class="wrap relative">
+    <p class="wordmark" aria-hidden="true" data-fade><span class="wm-line">Çağatay Uçar</span></p>
+    <footer class="foot">
+      <p data-i18n="f.rights">© 2026 Çağatay Uçar</p>
+      <p data-i18n="f.uni">Yıldız Teknik Üniversitesi, Çevre Mühendisliği</p>
+      <a href="#top" data-i18n="f.top">Başa dön</a>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<!-- LIGHTBOX -->
+<dialog id="lb" class="lb" aria-label="Görsel">
+  <div class="lb-bar">
+    <p id="lb-cap" class="lb-cap"></p>
+    <div class="lb-ctl">
+      <button type="button" class="glass icon-btn" id="lb-out" data-i18n-attr="aria-label:lb.out;title:lb.out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      <button type="button" class="glass icon-btn" id="lb-fit" data-i18n-attr="aria-label:lb.fit;title:lb.fit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" class="glass icon-btn" id="lb-in" data-i18n-attr="aria-label:lb.in;title:lb.in"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      <button type="button" class="glass icon-btn" id="lb-close" data-i18n-attr="aria-label:lb.close;title:lb.close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt="" draggable="false"></div>
+</dialog>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

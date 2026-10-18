@@ -1,0 +1,20 @@
+PORTFOLYO SITESI - NASIL ACILIR
+
+1) Zip'i bir klasore cikarin.
+2) Windows: BASLAT.bat dosyasina cift tiklayin (Python kullanir). Ya da klasorde: python serve.py
+   (Node.js veya Python gerekir. Node.js: nodejs.org)
+   Mac/Linux: klasorde terminal acip su komutu calistirin:  node scripts/serve.mjs 4173
+3) index.html'e cift tiklayarak ACMAYIN: 3D modeller tarayicida file:// uzerinden yuklenmez.
+4) Internet baglantisi gerekir (Three.js ve Inter fontu CDN'den gelir).
+
+DOSYALAR
+  index.html        sayfa
+  css/site.css      tum stiller
+  js/main.js        scroll animasyonlari, lightbox, menu
+  js/viewer.js      Three.js 3D goruntuleyici
+  js/i18n.js        TR/EN metinleri
+  js/config.js      E-POSTA ve LINKEDIN adreslerinizi buraya yazin
+  models/           3 adet .glb model
+  img/              gorseller (hidrostatik, pid, teknik cizim, izometri)
+
+ONCE YAPIN: js/config.js icindeki email ve linkedin degerlerini kendi bilgilerinizle degistirin.
